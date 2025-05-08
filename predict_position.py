@@ -12,7 +12,7 @@ DB_FILE = "wifi_fingerprint_data.json"
 MAP_IMAGE = "CEIES_floorplan.jpg"
 SCAN_INTERVAL = 5  # seconds
 
-def get_iwlist_output(interface="wlp4s0"):
+def get_iwlist_output(interface="wlp0s20f3"):
     result = subprocess.run(["sudo", "iwlist", interface, "scan"], capture_output=True, text=True)
     return result.stdout
 
@@ -30,6 +30,7 @@ def extract_rssi(iwlist_output, known_bssids):
             if bssid in known_bssids and rssi_match:
                 rssi = int(rssi_match.group(1))
                 rssi_data[bssid] = rssi
+    print(rssi_data)
 
     return rssi_data
 
@@ -63,6 +64,7 @@ def draw_position(map_img, position):
     height, width, _ = img.shape
     px = int((position[0] - 1) / (grid_size - 1) * width)
     py = height - int((position[1] - 1) / (grid_size - 1) * height)
+    print(position)
 
     cv2.circle(img, (px, py), 10, (0, 0, 255), -1)
     cv2.putText(img, f"({position[0]}, {position[1]})", (px + 15, py),

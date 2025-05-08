@@ -8,7 +8,7 @@ ESSID_FILTER = "KAU-INTERNET"
 BSSID_LIST_FILE = "kau_bssids.txt"
 OUTPUT_FILE = "wifi_fingerprint_data.json"
 
-def get_iwlist_output(interface="wlp4s0"):
+def get_iwlist_output(interface="wlp0s20f3"):
     result = subprocess.run(["sudo", "iwlist", interface, "scan"], capture_output=True, text=True)
     return result.stdout
 
